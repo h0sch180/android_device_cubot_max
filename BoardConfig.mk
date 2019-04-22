@@ -34,7 +34,7 @@ MTK_K64_SUPPORT = yes
 
 # CMHW
 BOARD_USES_CYANOGEN_HARDWARE := true
-BOARD_HARDWARE_CLASS += device/cubot/max/cmhw
+BOARD_HARDWARE_CLASS += device/CUBOT/MAX/cmhw
 
 # Deodex
 #WITH_DEXPREOPT := false
@@ -89,7 +89,7 @@ BOARD_KERNEL_CMDLINE = bootopt=64S3,32N2,64N2 androidboot.selinux=permissive
 BOARD_KERNEL_OFFSET = 0x00080000
 TARGET_USES_64_BIT_BINDER := true
 endif
-BOARD_MKBOOTIMG_ARGS := --kernel_offset $(BOARD_KERNEL_OFFSET) --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_TAGS_OFFSET) --board BLADE_A610_V0
+BOARD_MKBOOTIMG_ARGS := --kernel_offset $(BOARD_KERNEL_OFFSET) --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_TAGS_OFFSET) --board MAX_V0
 
 BOARD_CUSTOM_BOOTIMG := true
 
@@ -106,7 +106,7 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE:=12353781760
 BOARD_FLASH_BLOCK_SIZE := 4096
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := a610,ZTE_BLADE_A610,A610,P635T36,E183L
+TARGET_OTA_ASSERT_DEVICE := max,MAX,CUBOT_MAX,cubot_max
 
 # Disable memcpy opt (for audio libraries)
 TARGET_CPU_MEMCPY_OPT_DISABLE := true
@@ -143,7 +143,7 @@ BACKLIGHT_PATH := /sys/class/leds/lcd-backlight/brightness
 WITH_SU := true
 
 # RIL
-BOARD_RIL_CLASS := ../../../device/cubot/max/ril
+BOARD_RIL_CLASS := ../../../device/CUBOT/MAX/ril
 
 
 BOARD_DISABLE_HW_ID_MATCH_CHECK := true
