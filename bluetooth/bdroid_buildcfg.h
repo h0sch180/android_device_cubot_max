@@ -19,6 +19,6 @@
 
 #define BTA_DISABLE_DELAY 1000 /* in milliseconds */
 
-#define BTM_DEF_LOCAL_NAME   "Doogee T6pro  "
+#define BTM_DEF_LOCAL_NAME   "CUBOT MAX  "
 
 #endif
