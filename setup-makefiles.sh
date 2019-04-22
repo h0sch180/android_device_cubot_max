@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DEVICE=max
-VENDOR=cubot
+DEVICE=MAX
+VENDOR=CUBOT
 
 OUTDIR=vendor/$VENDOR/$DEVICE
 MAKEFILE=../../../$OUTDIR/$DEVICE-vendor-blobs.mk

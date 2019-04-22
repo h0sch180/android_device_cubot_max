@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export DEVICE=max
-export VENDOR=cubot
+export DEVICE=MAX
+export VENDOR=CUBOT
 
 if [ $# -eq 0 ]; then
   SRC=adb

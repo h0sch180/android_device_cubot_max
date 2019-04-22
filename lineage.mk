@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LOCAL_PATH := device/cubot/max
+LOCAL_PATH := device/CUBOT/MAX
 
 # Inherit some common Lineage OS stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
@@ -24,11 +24,12 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit device configuration
 $(call inherit-product, $(LOCAL_PATH)/device.mk)
-$(call inherit-product-if-exists, vendor/cubot/max/max-vendor.mk)
+$(call inherit-product-if-exists, vendor/CUBOT/MAX/MAX-vendor.mk)
 
 # Device branding
-PRODUCT_DEVICE := max 
-PRODUCT_NAME := lineage_max
+PRODUCT_RELEASE_NAME := MAX 
+PRODUCT_DEVICE := MAX 
+PRODUCT_NAME := lineage_MAX
 PRODUCT_BRAND := CUBOT 
 PRODUCT_MANUFACTURER := CUBOT
 PRODUCT_MODEL := CUBOT MAX

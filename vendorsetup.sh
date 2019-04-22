@@ -1,4 +1,4 @@
-add_lunch_combo lineage_max-eng
-add_lunch_combo lineage_max-userdebug
-add_lunch_combo lineage_max-user
-
+# Use this to add Max to CM's lunch command menu
+for var in eng user userdebug; do
+  add_lunch_combo lineage_MAX-$var
+done
