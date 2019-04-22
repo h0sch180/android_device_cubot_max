@@ -1,0 +1,4 @@
+add_lunch_combo lineage_max-eng
+add_lunch_combo lineage_max-userdebug
+add_lunch_combo lineage_max-user
+
