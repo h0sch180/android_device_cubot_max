@@ -11,8 +11,8 @@ LOCAL_SRC_FILES := \
   radiomod.c
 
 LOCAL_C_INCLUDES := \
-  device/zte/a610/bluetooth-mtk/include/libnvram \
-  device/zte/a610/bluetooth-mtk/include \
+  device/CUBOT/MAX/bluetooth-mtk/include/libnvram \
+  device/CUBOT/MAX/bluetooth-mtk/include \
   $(LOCAL_PATH)/../inc
 
 LOCAL_CFLAGS += -DMTK_CONSYS_MT6735

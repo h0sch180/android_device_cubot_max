@@ -35,5 +35,6 @@ patch -p1 < ../../device/CUBOT/MAX/patches_mtk/vendor_cmsdk.patch
 cd ../..
 cd packages/apps/Settings
 patch -p1 < ../../../device/CUBOT/MAX/patches_mtk/settings.patch
+git clean -f -d
 cd ../../..
 
