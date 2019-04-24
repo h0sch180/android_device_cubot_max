@@ -1,40 +1,51 @@
 #!/bin/bash
 #cd ../../../..
 cd system/core
-patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_core.patch
+patch -t -p1 < ../../device/CUBOT/MAX/patches_mtk/system_core.patch
+git clean -f -d
 cd ../..
 cd bionic
-patch -p1 < ../device/CUBOT/MAX/patches_mtk/bionic.patch
+patch -t -p1 < ../device/CUBOT/MAX/patches_mtk/bionic.patch
+git clean -f -d
 cd ..
 cd system/sepolicy
-patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_sepolicy.patch
+patch -t -p1 < ../../device/CUBOT/MAX/patches_mtk/system_sepolicy.patch
+git clean -f -d
 cd ../..
 cd frameworks/av
-patch -p1 < ../../device/CUBOT/MAX/patches_mtk/frameworks_av.patch
+patch -t -p1 < ../../device/CUBOT/MAX/patches_mtk/frameworks_av.patch
+git clean -f -d
 cd ..
 cd native
-patch -p1 < ../../device/CUBOT/MAX/patches_mtk/frameworks_native.patch
+patch -t -p1 < ../../device/CUBOT/MAX/patches_mtk/frameworks_native.patch
+git clean -f -d
 cd ..
 cd base
-patch -p1 < ../../device/CUBOT/MAX/patches_mtk/frameworks_base.patch
+patch -t -p1 < ../../device/CUBOT/MAX/patches_mtk/frameworks_base.patch
+git clean -f -d
 cd ..
 cd opt/telephony
-patch -p1 < ../../../device/CUBOT/MAX/patches_mtk/frameworks_opt_telephony.patch
+patch -t -p1 < ../../../device/CUBOT/MAX/patches_mtk/frameworks_opt_telephony.patch
+git clean -f -d
 cd ../../..
 cd packages/apps/Snap
-patch -p1 < ../../../device/CUBOT/MAX/patches_mtk/snap.patch
+patch -t -p1 < ../../../device/CUBOT/MAX/patches_mtk/snap.patch
+git clean -f -d
 cd ..
 cd FMRadio
-patch -p1 < ../../../device/CUBOT/MAX/patches_mtk/fmradio.patch
+patch -t -p1 < ../../../device/CUBOT/MAX/patches_mtk/fmradio.patch
+git clean -f -d
 cd ../../..
 cd system/netd
-patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_netd.patch
+patch -t -p1 < ../../device/CUBOT/MAX/patches_mtk/system_netd.patch
+git clean -f -d
 cd ../..
 cd vendor/cmsdk
-patch -p1 < ../../device/CUBOT/MAX/patches_mtk/vendor_cmsdk.patch
+patch -t -p1 < ../../device/CUBOT/MAX/patches_mtk/vendor_cmsdk.patch
+git clean -f -d
 cd ../..
 cd packages/apps/Settings
-patch -p1 < ../../../device/CUBOT/MAX/patches_mtk/settings.patch
+patch -t -p1 < ../../../device/CUBOT/MAX/patches_mtk/settings.patch
 git clean -f -d
 cd ../../..
 
