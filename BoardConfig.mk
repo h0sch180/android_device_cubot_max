@@ -19,12 +19,6 @@ LOCAL_PATH := device/CUBOT/MAX
 BOARD_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 BOARD_GLOBAL_CFLAGS += -DDISABLE_HW_ID_MATCH_CHECK
 
-# GPS
-TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
-BOARD_GPS_LIBRARIES := true
-BOARD_CONNECTIVITY_MODULE := conn_soc 
-BOARD_MEDIATEK_USES_GPS := true
-
 # Platform
 TARGET_BOARD_PLATFORM := mt6753
 TARGET_NO_BOOTLOADER := true
@@ -36,11 +30,28 @@ MTK_K64_SUPPORT = yes
 BOARD_USES_CYANOGEN_HARDWARE := true
 BOARD_HARDWARE_CLASS += device/CUBOT/MAX/cmhw
 
-# Deodex
-#WITH_DEXPREOPT := false
-WITH_DEXPREOPT_BOOT_IMG_ONLY := true
-DONT_DEXPREOPT_PREBUILTS := true
+# build old-style zip files (required for ota updater)
+BLOCK_BASED_OTA := false
 
+##################################
+#    **Odex Configuration**
+#      true = Odexed Rom
+#      false = Deodexed Rom
+#      null = Rom source decides
+##################################
+ODEX := false
+
+ifeq ($(ODEX),true)
+    WITH_DEXPREOPT := true
+    DISABLE_DEXPREOPT := false
+endif
+
+ifeq ($(ODEX),false)
+    WITH_DEXPREOPT := false
+    DISABLE_DEXPREOPT := true
+endif
+
+# set active when its 32bit
 #FORCE_32_BIT = true
 
 # Architecture
@@ -145,11 +156,15 @@ WITH_SU := false
 # RIL
 BOARD_RIL_CLASS := ../../../device/CUBOT/MAX/ril
 
-
 BOARD_DISABLE_HW_ID_MATCH_CHECK := true
 
 BOARD_CONNECTIVITY_VENDOR := MediaTek
 BOARD_CONNECTIVITY_MODULE := conn_soc
+
+# GPS
+TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
+BOARD_GPS_LIBRARIES := true
+BOARD_MEDIATEK_USES_GPS := true
 
 # WIFI
 WPA_SUPPLICANT_VERSION := VER_0_8_X
