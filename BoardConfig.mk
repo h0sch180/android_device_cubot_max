@@ -19,17 +19,12 @@ LOCAL_PATH := device/CUBOT/MAX
 BOARD_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 BOARD_GLOBAL_CFLAGS += -DDISABLE_HW_ID_MATCH_CHECK
 
-# Platform
-TARGET_BOARD_PLATFORM := mt6753
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_FACTORYIMAGE := true
+# Disable NINJA
+#USE_NINJA := false
 
 # CMHW
 BOARD_USES_CYANOGEN_HARDWARE := true
 BOARD_HARDWARE_CLASS += device/CUBOT/MAX/cmhw
-
-# Disable NINJA
-#USE_NINJA := false
 
 # build old-style zip files (required for ota updater)
 BLOCK_BASED_OTA := false
@@ -51,6 +46,11 @@ ifeq ($(ODEX),false)
     WITH_DEXPREOPT := false
     DISABLE_DEXPREOPT := true
 endif
+
+# Platform
+TARGET_BOARD_PLATFORM := mt6753
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_FACTORYIMAGE := true
 
 # Architecture (32bit / 64bit)
 #FORCE_32_BIT = true
