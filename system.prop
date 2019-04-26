@@ -103,8 +103,3 @@ ro.mtk_perf_simple_start_win=1
 ro.mtk_perf_fast_start_win=1
 ro.mtk_perf_response_time=1
 dalvik.vm.checkjni=false
-
-# Fingerprint
-ro.build.description=x6069_cubot_5365u-user 6.0 MRA58K 1495446625 release-keys
-ro.build.fingerprint=CUBOT/x6069_cubot_5365u/x6069_cubot_5365u:6.0/MRA58K/1473658184:user/release-keys
-
