@@ -29,6 +29,9 @@ BOARD_HARDWARE_CLASS += device/CUBOT/MAX/cmhw
 # build old-style zip files (required for ota updater)
 BLOCK_BASED_OTA := false
 
+# build without default recovery
+TARGET_NO_RECOVERY := true
+
 ##################################
 #    **Odex Configuration**
 #      true = Odexed Rom
