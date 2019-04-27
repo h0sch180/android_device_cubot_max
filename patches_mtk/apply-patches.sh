@@ -1,7 +1,9 @@
 #!/bin/bash
 #cd ../../../..
 cd system/core
-patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_core.patch
+patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_core/0001-system_core.patch
+patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_core/0002-Prevent-spamming-audio.patch
+patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_core/0003-healthd-correctly-report-battery-voltage-on-MTK-kernels.patch
 cd ../..
 cd bionic
 patch -p1 < ../device/CUBOT/MAX/patches_mtk/bionic.patch
@@ -16,7 +18,8 @@ cd native
 patch -p1 < ../../device/CUBOT/MAX/patches_mtk/frameworks_native.patch
 cd ..
 cd base
-patch -p1 < ../../device/CUBOT/MAX/patches_mtk/frameworks_base.patch
+patch -p1 < ../../device/CUBOT/MAX/patches_mtk/framework_base/0001-frameworks_base.patch
+patch -p1 < ../../device/CUBOT/MAX/patches_mtk/framework_base/0002-Fix-Minior-Bugs.patch
 cd ..
 cd opt/telephony
 patch -p1 < ../../../device/CUBOT/MAX/patches_mtk/frameworks_opt_telephony.patch
