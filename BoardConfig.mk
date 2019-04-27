@@ -30,7 +30,7 @@ BOARD_HARDWARE_CLASS += device/CUBOT/MAX/cmhw
 BLOCK_BASED_OTA := false
 
 # build without default recovery
-TARGET_NO_RECOVERY := true
+# TARGET_NO_RECOVERY := true
 
 ##################################
 #    **Odex Configuration**
@@ -215,6 +215,9 @@ TW_USE_TOOLBOX := true
 
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun%d/file"
 
+PRODUCT_COPY_FILES += system/core/rootdir/init.zygote64_32.rc:root/init.zygote64_32.rc
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.zygote=zygote64_32
+
 # sepolicy
 BOARD_SEPOLICY_DIRS := $(LOCAL_PATH)/sepolicy
 
@@ -223,6 +226,8 @@ POLICYVERS := 29
 
 # Seccomp filter
 BOARD_SECCOMP_POLICY := $(LOCAL_PATH)/seccomp
+
+#TARGET_LDPRELOAD += libxlog.so:libmtk_symbols.so
 
 MTK_GPU_VERSION := mali midgard r7p0
 
