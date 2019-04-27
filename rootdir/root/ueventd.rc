@@ -1,6 +1,13 @@
 subsystem adf
 	devname uevent_devname
 
+# ueventd can only set permissions on device nodes and their associated
+# sysfs attributes, not on arbitrary paths.
+#
+# format for /dev rules: devname mode uid gid
+# format for /sys rules: nodename attr mode uid gid
+# shortcut: "mtd@NN" expands to "/dev/mtd/mtdNN"
+
 /dev/null                 0666   root       root
 /dev/zero                 0666   root       root
 /dev/full                 0666   root       root
@@ -13,8 +20,6 @@ subsystem adf
 /dev/ashmem               0666   root       root
 /dev/binder               0666   root       root
 
-#add by chenxuanyu for HD_GF66xx FINGERPIRN
-/dev/gf66xx-spi             0666   system     system
 # Anyone can read the logs, but if they're not in the "logs"
 # group, then they'll only see log entries for their UID.
 /dev/log/*                0666   root       log
@@ -30,7 +35,7 @@ subsystem adf
 /dev/dri/*                0666   root       graphics
 
 # these should not be world writable
-/dev/diag                 0660   radio      radio
+/dev/diag                 0660   system     qcom_diag
 /dev/diag_arm9            0660   radio      radio
 /dev/android_adb          0660   adb        adb
 /dev/android_adb_enable   0660   adb        adb
@@ -40,7 +45,7 @@ subsystem adf
 /dev/alarm                0664   system     radio
 /dev/rtc0                 0640   system     system
 /dev/tty0                 0660   root       system
-/dev/graphics/*           0660   root       graphics
+/dev/graphics/*           0660   system     graphics
 /dev/msm_hw3dm            0660   system     graphics
 /dev/input/*              0660   root       input
 /dev/eac                  0660   root       audio
@@ -97,6 +102,15 @@ subsystem adf
 /sys/devices/virtual/usb_composite/*   enable      0664  root   system
 /sys/devices/system/cpu/cpu*   cpufreq/scaling_max_freq   0664  system system
 /sys/devices/system/cpu/cpu*   cpufreq/scaling_min_freq   0664  system system
+
+#liuyang add begin
+/sys/devices/platform/leds-mt65xx/leds/green   delay_on      0664  system   system
+/sys/devices/platform/leds-mt65xx/leds/green   delay_off      0664  system   system
+/sys/devices/platform/leds-mt65xx/leds/red   delay_on      0664  system   system
+/sys/devices/platform/leds-mt65xx/leds/red   delay_off      0664  system   system
+/sys/devices/platform/leds-mt65xx/leds/blue   delay_on      0664  system   system
+/sys/devices/platform/leds-mt65xx/leds/blue   delay_off      0664  system   system
+#liuyang add end
 
 # DVB API device nodes
 /dev/dvb*                 0660   root       system
