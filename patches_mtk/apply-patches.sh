@@ -39,6 +39,9 @@ patch -p1 < ../../../device/CUBOT/MAX/patches_mtk/fmradio.patch
 cd ../../..
 cd packages/apps/Settings
 patch -p1 < ../../../device/CUBOT/MAX/patches_mtk/settings.patch
+if [ "`pwd`" == "/android/viperos/packages/apps/Settings" ]; then
+	patch -p1 < ../../../device/CUBOT/MAX/patches_mtk/settings_viper.patch
+fi
 git clean -f -d
 cd ../../..
 
