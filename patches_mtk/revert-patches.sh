@@ -9,6 +9,12 @@ cd ..
 cd system/sepolicy
 git reset --hard && git clean -fd
 cd ../..
+cd system/bt
+git reset --hard && git clean -fd
+cd ../..
+cd system/netd
+git reset --hard && git clean -fd
+cd ../..
 cd frameworks/av
 git reset --hard && git clean -fd
 cd ..
@@ -27,9 +33,6 @@ cd ..
 cd FMRadio
 git reset --hard && git clean -fd
 cd ../../..
-cd system/netd
-git reset --hard && git clean -fd
-cd ../..
 cd packages/apps/Settings
 git reset --hard && git clean -fd
 cd ../../..

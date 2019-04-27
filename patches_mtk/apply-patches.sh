@@ -10,6 +10,13 @@ patch -p1 < ../device/CUBOT/MAX/patches_mtk/bionic.patch
 cd ..
 cd system/sepolicy
 patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_sepolicy.patch
+patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_sepolicy2.patch
+cd ../..
+cd system/netd
+patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_netd.patch
+cd ../..
+cd system/bt
+patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_bt.patch
 cd ../..
 cd frameworks/av
 patch -p1 < ../../device/CUBOT/MAX/patches_mtk/frameworks_av.patch
@@ -30,10 +37,16 @@ cd ..
 cd FMRadio
 patch -p1 < ../../../device/CUBOT/MAX/patches_mtk/fmradio.patch
 cd ../../..
-cd system/netd
-patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_netd.patch
-cd ../..
 cd packages/apps/Settings
 patch -p1 < ../../../device/CUBOT/MAX/patches_mtk/settings.patch
 git clean -f -d
 cd ../../..
+
+# EngineerMode Patches
+cd frameworks/av
+patch -p1 < ../../device/CUBOT/MAX/patches_mtk/engineermode/1-em.patch
+cd ../..
+cd frameworks/base
+patch -p1 < ../../device/CUBOT/MAX/patches_mtk/engineermode/0002-em.patch
+cd ../..
+exit 0
