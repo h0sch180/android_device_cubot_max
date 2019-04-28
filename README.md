@@ -18,20 +18,18 @@ Camera  | Front: 5.0MPx, Back 13MPx, LED Flash
 
 
 # Instructions
-
+```
 repo init -u https://github.com/ViperOS-Extended/manifest -b nougat
 repo sync -c -f -j8 --force-sync --no-clone-bundle --no-tags
-
 git clone https://github.com/h0sch180/android_device_cubot_max.git -b viperos device/CUBOT/MAX
-
 ./device/CUBOT/MAX/patches_mtk/apply-patches.sh
-
 . build/envsetup.sh
 export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx8g"
 ./prebuilts/sdk/tools/jack-admin kill-server
 ./prebuilts/sdk/tools/jack-admin start-server
 lunch viper_MAX-userdebug
 mka poison
+```
 
 
 # Acknowledgements
