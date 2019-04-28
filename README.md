@@ -1,4 +1,4 @@
-# LineageOS 14.1 device tree for CUBOT MAX
+# ViperOS Extended device tree for CUBOT MAX
 
 CUBOT MAX
 ==============
