@@ -14,7 +14,7 @@ Battery | 4100 mAh
 Display | 6" 720 x 1280 px
 Camera  | Front: 5.0MPx, Back 13MPx, LED Flash
 
-![DEXP](https://github.com/h0sch180/android_device_cubot_max/blob/master/cubot_max.jpg "Cubot Max")
+![DEXP](https://github.com/h0sch180/android_device_cubot_max/blob/cm-14.1/cubot_max.jpg "Cubot Max")
 
 # Instructions
 ```
