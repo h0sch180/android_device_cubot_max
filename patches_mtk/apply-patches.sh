@@ -5,6 +5,7 @@ patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_core/0001-system_core.patc
 patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_core/0002-Prevent-spamming-audio.patch
 patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_core/0003-healthd-correctly-report-battery-voltage-on-MTK-kernels.patch
 patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_core/0004_system_core_rootdir_ueventd.patch
+patch -p1 < ../../device/CUBOT/MAX/patches_mtk/system_core/0005_system_core_fingerprint.patch
 cd ../..
 cd bionic
 patch -p1 < ../device/CUBOT/MAX/patches_mtk/bionic.patch
