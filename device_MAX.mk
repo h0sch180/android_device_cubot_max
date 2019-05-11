@@ -291,6 +291,5 @@ PRODUCT_PACKAGES += \
 
 # 3rd-party apps
 PRODUCT_PACKAGES += \
-YGPS \
-EngineerMode 
+YGPS
 	

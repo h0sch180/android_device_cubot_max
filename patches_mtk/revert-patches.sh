@@ -27,12 +27,17 @@ cd ..
 cd opt/telephony
 git reset --hard && git clean -fd
 cd ../../..
-cd packages/apps/Snap
-git reset --hard && git clean -fd
-cd ..
+cd packages/apps/
+#Snap
+#git reset --hard && git clean -fd
+#cd ..
 cd FMRadio
 git reset --hard && git clean -fd
 cd ../../..
 cd packages/apps/Settings
 git reset --hard && git clean -fd
 cd ../../..
+cd external/wpa_supplicant_8
+git reset --hard && git clean -fd
+cd ../..
+
