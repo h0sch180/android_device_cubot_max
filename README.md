@@ -1,4 +1,4 @@
-# LineageOS 14.1 device tree for CUBOT MAX
+# Resurrection Remix 5.8.5 device tree for CUBOT MAX
 
 CUBOT MAX
 ==============
@@ -18,10 +18,10 @@ Camera  | Front: 5.0MPx, Back 13MPx, LED Flash
 
 # Instructions
 ```
-repo init -u git://github.com/LineageOS/android.git -b cm-14.1
+repo init -u https://github.com/ResurrectionRemix/platform_manifest.git -b nougat
 repo sync
-git https://github.com/h0sch180/android_device_cubot_max.git -b cm-14.1 device/CUBOT/MAX
-./device/CUBOT/MAX/patches_mtk/apply-patches.sh
+git https://github.com/h0sch180/android_device_cubot_max.git -b rr-5.8.5 device/CUBOT/MAX
+device/CUBOT/MAX/patches_mtk/apply-patches.sh
 . build/envsetup.sh
 export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx8g"
 ./prebuilts/sdk/tools/jack-admin kill-server

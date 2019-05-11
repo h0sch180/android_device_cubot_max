@@ -74,7 +74,7 @@ index 064d62d..16eb2e8 100644
          if (!SELinux.isSELinuxEnabled()) {
              String status = getResources().getString(R.string.selinux_status_disabled);
              setStringSummary(KEY_SELINUX_STATUS, status);
-@@ -330,6 +333,13 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
+@@ -338,6 +341,14 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
                          + "queryIntentActivities() returns empty" );
                  return true;
              }
@@ -85,9 +85,10 @@ index 064d62d..16eb2e8 100644
 +                        + "queryIntentActivities() returns empty" );
 +                return true;
 +            }
-         } else if (preference.getKey().equals(KEY_DEVICE_FEEDBACK)) {
++
+         } else if (preference.getKey().equals(KEY_BUILD_TYPE)) {
              sendFeedback();
-         }
+         } else if (preference.getKey().equals(KEY_DEVICE_FEEDBACK)) {
 -- 
 2.7.4
 

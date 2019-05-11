@@ -340,31 +340,6 @@ index f5f7732..cc1aedc 100644
  
      /** Lock held whenever communicating with native daemon. */
      private final Object mDaemonLock = new Object();
-@@ -131,12 +131,22 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
-     public void run() {
-         mCallbackHandler = new Handler(mLooper, this);
- 
-+        long startTime = 0;
-         while (true) {
-             try {
-                 listenToSocket();
-             } catch (Exception e) {
--                loge("Error in NativeDaemonConnector: " + e);
--                SystemClock.sleep(5000);
-+                long currentTime = SystemClock.uptimeMillis();
-+                long elapsedTime = currentTime - startTime;
-+
-+                if (elapsedTime >= 5000 && startTime > 0) {
-+                    startTime = 0;
-+                }
-+
-+                if (startTime == 0)
-+                    startTime = currentTime;
-+
-+                SystemClock.sleep(100);
-             }
-         }
-     }
 @@ -267,7 +277,6 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
                  }
              }
@@ -373,19 +348,6 @@ index f5f7732..cc1aedc 100644
              throw ex;
          } finally {
              synchronized (mDaemonLock) {
-diff --git a/services/core/java/com/android/server/NetworkManagementService.java b/services/core/java/com/android/server/NetworkManagementService.java
-index 4099d93..13b0c7c 100644
---- a/services/core/java/com/android/server/NetworkManagementService.java
-+++ b/services/core/java/com/android/server/NetworkManagementService.java
-@@ -925,7 +925,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
-                         timestampNanos = SystemClock.elapsedRealtimeNanos();
-                     }
-                     boolean isActive = cooked[2].equals("active");
--                    notifyInterfaceClassActivity(Integer.parseInt(cooked[3]),
-+                    notifyInterfaceClassActivity(cooked[3] == null ? 0 : Integer.parseInt(cooked[3]),
-                             isActive ? DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH
-                             : DataConnectionRealTimeInfo.DC_POWER_STATE_LOW,
-                             timestampNanos, processUid, false);
 -- 
 2.7.4
 
