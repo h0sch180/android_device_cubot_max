@@ -1,4 +1,4 @@
-# LineageOS 14.1 device tree for CUBOT MAX
+# crDroid 3.8.9 device tree for CUBOT MAX
 
 CUBOT MAX
 ==============
@@ -18,9 +18,9 @@ Camera  | Front: 5.0MPx, Back 13MPx, LED Flash
 
 # Instructions
 ```
-repo init -u git://github.com/LineageOS/android.git -b cm-14.1
+repo init -u https://github.com/crdroidandroid/android -b 7.1 
 repo sync
-git https://github.com/h0sch180/android_device_cubot_max.git -b cm-14.1 device/CUBOT/MAX
+git https://github.com/h0sch180/android_device_cubot_max.git -b crdroid-3.8.9 device/CUBOT/MAX
 ./device/CUBOT/MAX/patches_mtk/apply-patches.sh
 . build/envsetup.sh
 export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx8g"
