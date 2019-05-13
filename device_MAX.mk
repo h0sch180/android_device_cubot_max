@@ -114,8 +114,7 @@ PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/configs/gps/slp_conf:system/etc/slp_conf
 
 PRODUCT_PACKAGES += \
-    wifi2agps \
-    wmt_loader
+    wifi2agps
 
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
 
