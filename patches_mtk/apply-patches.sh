@@ -42,9 +42,10 @@ cd ..
 cd opt/telephony
 patch -p1 < ../../../device/$brand/$model/patches_mtk/frameworks_opt_telephony.patch
 cd ../../..
-cd packages/apps/Snap
-patch -p1 < ../../../device/$brand/$model/patches_mtk/snap.patch
-cd ..
+cd packages/apps
+#/Snap
+#patch -p1 < ../../../device/$brand/$model/patches_mtk/snap.patch
+#cd ..
 cd FMRadio
 patch -p1 < ../../../device/$brand/$model/patches_mtk/fmradio.patch
 cd ../../..
@@ -57,9 +58,9 @@ git clean -f -d
 cd ../../..
 
 # EngineerMode Patches
-cd frameworks/av
-patch -p1 < ../../device/$brand/$model/patches_mtk/engineermode/1-em.patch
-cd ../..
-cd frameworks/base
-patch -p1 < ../../device/$brand/$model/patches_mtk/engineermode/0002-em.patch
-cd ../..
+#cd frameworks/av
+#patch -p1 < ../../device/$brand/$model/patches_mtk/engineermode/1-em.patch
+#cd ../..
+#cd frameworks/base
+#patch -p1 < ../../device/$brand/$model/patches_mtk/engineermode/0002-em.patch
+#cd ../..
