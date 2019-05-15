@@ -17,11 +17,11 @@ cd ..
 cd system/sepolicy
 patch -p1 < ../../device/$brand/$model/patches_mtk/system_sepolicy.patch
 cd ../..
-cd system/netd
-patch -p1 < ../../device/$brand/$model/patches_mtk/system_netd.patch
-cd ../..
 
 ### DO NOT USE SYSTEM BLUETOOTH PATCH
+#cd system/netd
+#patch -p1 < ../../device/$brand/$model/patches_mtk/system_netd.patch
+#cd ../..
 #cd system/bt
 #patch -p1 < ../../device/$brand/$model/patches_mtk/system_bt.patch
 #cd ../..
@@ -36,6 +36,8 @@ cd ..
 cd base
 patch -p1 < ../../device/$brand/$model/patches_mtk/framework_base/0001-frameworks_base.patch
 patch -p1 < ../../device/$brand/$model/patches_mtk/framework_base/0002-Fix-Minior-Bugs.patch
+patch -p1 < ../../device/$brand/$model/patches_mtk/framework_base/0003-frameworks_base_signature_spoofing.patch
+git clean -f -d
 cd ..
 cd opt/telephony
 patch -p1 < ../../../device/$brand/$model/patches_mtk/frameworks_opt_telephony.patch
@@ -61,4 +63,3 @@ cd ../..
 cd frameworks/base
 patch -p1 < ../../device/$brand/$model/patches_mtk/engineermode/0002-em.patch
 cd ../..
-exit 0
