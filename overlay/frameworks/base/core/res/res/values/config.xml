@@ -207,4 +207,9 @@
 
     <!-- Default color for notification LED is green. -->
     <color name="config_defaultNotificationColor">#ff0000ff</color>
+
+		<!-- enable WifiDisplay / Miracast -->
+  	<bool name="config_enableWifiDisplay">true</bool>
+	  <bool name="config_wifiDisplaySupportsProtectedBuffers">false</bool>
+
 </resources>
