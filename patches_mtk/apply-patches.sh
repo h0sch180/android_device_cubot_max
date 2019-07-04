@@ -17,11 +17,11 @@ cd ..
 cd system/sepolicy
 patch -p1 < ../../device/$brand/$model/patches_mtk/system_sepolicy.patch
 cd ../..
+cd system/netd
+patch -p1 < ../../device/$brand/$model/patches_mtk/system_netd.patch
+cd ../..
 
 ### DO NOT USE SYSTEM BLUETOOTH PATCH
-#cd system/netd
-#patch -p1 < ../../device/$brand/$model/patches_mtk/system_netd.patch
-#cd ../..
 #cd system/bt
 #patch -p1 < ../../device/$brand/$model/patches_mtk/system_bt.patch
 #cd ../..
