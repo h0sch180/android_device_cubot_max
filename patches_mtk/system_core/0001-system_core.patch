@@ -82,24 +82,25 @@ index 345d442c0..f93d0c5ba 100644
  extern int have_console;
  extern std::string console_name;
 diff --git a/init/service.cpp b/init/service.cpp
-index 8127e708d..a09fd8f71 100644
+index b0372fb..77a8ccf 100644
 --- a/init/service.cpp
 +++ b/init/service.cpp
-@@ -371,12 +371,14 @@ bool Service::Start() {
+@@ -371,6 +371,7 @@ bool Service::Start() {
              scon = ret_scon;
              free(ret_scon);
          }
 +#if 0
-         if (rc == 0 && scon == mycon) {
+         if (rc == 0 && scon == mycon)
              ERROR("Service %s does not have a SELinux domain defined.\n", name_.c_str());
-             free(mycon);
-             free(fcon);
+         free(mycon);
+@@ -379,6 +380,7 @@ bool Service::Start() {
+             ERROR("could not get context while starting '%s'\n", name_.c_str());
              return false;
          }
 +#endif
-         free(mycon);
-         free(fcon);
-         if (rc < 0) {
+     }
+
+     NOTICE("Starting service '%s'...\n", name_.c_str());
 diff --git a/libcutils/fs_config.c b/libcutils/fs_config.c
 index 68cfcbe00..f19238606 100644
 --- a/libcutils/fs_config.c

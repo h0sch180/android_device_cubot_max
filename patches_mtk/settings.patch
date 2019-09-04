@@ -23,10 +23,10 @@ index 3e93d41..a352391 100644
      <!-- [CHAR LIMIT=NONE] Device Info screen. Countdown for user taps to enable development settings -->
      <plurals name="show_dev_countdown">
          <item quantity="one">You are now <xliff:g id="step_count">%1$d</xliff:g> step away from being a developer.</item>
-@@ -2355,6 +2357,8 @@
+@@ -2373,6 +2375,8 @@
      <string name="firmware_version">Android version</string>
      <!-- About phone screen, status item label  [CHAR LIMIT=60] -->
-     <string name="security_patch">Android security patch level</string>
+     <string name="security_patch">Security patch level</string>
 +    <!-- About phone screen, status item label  [CHAR LIMIT=60] -->
 +    <string name="author_info">Build author</string>
      <!-- About phone screen, status item label  [CHAR LIMIT=40] -->

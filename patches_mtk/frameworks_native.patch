@@ -880,19 +880,19 @@ index 98269a373..44a83d45b 100644
  
      p->writeInt32(dockBatterySupported ? 1 : 0);
 diff --git a/services/sensorservice/SensorService.cpp b/services/sensorservice/SensorService.cpp
-index d8e08775a..99da2c497 100644
+index 3be3b27..99da2c4 100644
 --- a/services/sensorservice/SensorService.cpp
 +++ b/services/sensorservice/SensorService.cpp
 @@ -191,10 +191,9 @@ void SensorService::onFirstRef() {
                  // available in the HAL
                  bool needRotationVector =
                          (virtualSensorsNeeds & (1<<SENSOR_TYPE_ROTATION_VECTOR)) != 0;
--                bool needOrientation = orientationIndex == -1;
- 
+-                bool needOrientation = !needRotationVector && orientationIndex == -1;
+
                  registerSensor(new RotationVectorSensor(), !needRotationVector, true);
 -                registerSensor(new OrientationSensor(), !needOrientation, true);
 +                registerSensor(new OrientationSensor(), !needRotationVector, true);
- 
+
                  bool needLinearAcceleration =
                          (virtualSensorsNeeds & (1<<SENSOR_TYPE_LINEAR_ACCELERATION)) != 0;
 diff --git a/services/surfaceflinger/DisplayUtils.cpp b/services/surfaceflinger/DisplayUtils.cpp

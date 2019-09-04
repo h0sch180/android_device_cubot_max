@@ -114,8 +114,99 @@ index aa2bd57..5cb45ca 100644
          addFileType("QCP", FILE_TYPE_QCP, "audio/qcelp");
          addFileType("AC3", FILE_TYPE_AC3, "audio/ac3");
          addFileType("EC3", FILE_TYPE_EC3, "audio/eac3");
+diff --git a/services/core/java/com/android/server/NativeDaemonConnector.java b/services/core/java/com/android/server/NativeDaemonConnector.java
+index b5a8332..9ef3f3b 100644
+--- a/services/core/java/com/android/server/NativeDaemonConnector.java
++++ b/services/core/java/com/android/server/NativeDaemonConnector.java
+@@ -75,7 +75,7 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
+     private AtomicInteger mSequenceNumber;
+
+     private static final long DEFAULT_TIMEOUT = 1 * 60 * 1000; /* 1 minute */
+-    private static final long WARN_EXECUTE_DELAY_MS = 500; /* .5 sec */
++    private static final long WARN_EXECUTE_DELAY_MS = 5500; /* 5.5 sec */
+
+     /** Lock held whenever communicating with native daemon. */
+     private final Object mDaemonLock = new Object();
+@@ -133,18 +133,28 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
+     public void run() {
+         mCallbackHandler = new Handler(mLooper, this);
+
++        long startTime = 0;
+         while (true) {
+             try {
+                 listenToSocket();
+             } catch (Exception e) {
+-                loge("Error in NativeDaemonConnector: " + e);
++                long currentTime = SystemClock.uptimeMillis();
++                long elapsedTime = currentTime - startTime;
++
++                if (elapsedTime >= 5000 && startTime > 0) {
++                    startTime = 0;
++                }
++
++                if (startTime == 0)
++                    startTime = currentTime;
++
++                SystemClock.sleep(100);
+                 String shutdownAct = SystemProperties.get(
+                         ShutdownThread.SHUTDOWN_ACTION_PROPERTY, "");
+                 if (shutdownAct != null && shutdownAct.length() > 0) {
+                     // The device is in middle of shutdown.
+                     break;
+                 }
+-                SystemClock.sleep(5000);
+             }
+         }
+     }
+@@ -275,7 +285,6 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
+                 }
+             }
+         } catch (IOException ex) {
+-            loge("Communications error: " + ex);
+             throw ex;
+         } finally {
+             synchronized (mDaemonLock) {
+diff --git a/services/core/java/com/android/server/NetworkManagementService.java b/services/core/java/com/android/server/NetworkManagementService.java
+index 4099d93..13b0c7c 100644
+--- a/services/core/java/com/android/server/NetworkManagementService.java
++++ b/services/core/java/com/android/server/NetworkManagementService.java
+@@ -925,7 +925,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
+                         timestampNanos = SystemClock.elapsedRealtimeNanos();
+                     }
+                     boolean isActive = cooked[2].equals("active");
+-                    notifyInterfaceClassActivity(Integer.parseInt(cooked[3]),
++                    notifyInterfaceClassActivity(cooked[3] == null ? 0 : Integer.parseInt(cooked[3]),
+                             isActive ? DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH
+                             : DataConnectionRealTimeInfo.DC_POWER_STATE_LOW,
+                             timestampNanos, processUid, false);
+-- 
+2.7.4
+
+From d9a0e0741e61b041a331fdd076d42951e0f15f26 Mon Sep 17 00:00:00 2001
+From: adi766 <adityakumarteli7846@gmail.com>
+Date: Sat, 23 Sep 2017 16:53:20 +0000
+Subject: [PATCH 4/4 ] Remove BatteryStatsService (2) error in log
+
+---
+ services/core/java/com/android/server/am/BatteryStatsService.java   | 1 -
+ 1 files changed, 0 insertions(+), 1 deletion(-)
+ 
+diff --git a/services/core/java/com/android/server/am/BatteryStatsService.java b/services/core/java/com/android/server/am/BatteryStatsService.java
+index ff13125..e6241c5 100644
+--- a/services/core/java/com/android/server/am/BatteryStatsService.java
++++ b/services/core/java/com/android/server/am/BatteryStatsService.java
+@@ -1422,7 +1422,6 @@ public final class BatteryStatsService extends IBatteryStats.Stub
+                 return data;
+             }
+         }
+-        Slog.e(TAG, "no controller energy info supplied");
+         return null;
+     }
+ 
+-- 
+2.7.4
 diff --git a/media/jni/android_media_MediaPlayer.cpp b/media/jni/android_media_MediaPlayer.cpp
-index 5bc45ff..2fb1a3b 100644
+index e68f6ab..c94beb7 100644
 --- a/media/jni/android_media_MediaPlayer.cpp
 +++ b/media/jni/android_media_MediaPlayer.cpp
 @@ -49,7 +49,6 @@
@@ -126,11 +217,10 @@ index 5bc45ff..2fb1a3b 100644
  
  #include "android_util_Binder.h"
  // ----------------------------------------------------------------------------
-@@ -138,153 +137,6 @@ void JNIMediaPlayerListener::notify(int msg, int ext1, int ext2, const Parcel *o
-     }
+@@ -139,158 +138,6 @@ void JNIMediaPlayerListener::notify(int msg, int ext1, int ext2, const Parcel *o
  }
  
--
+ 
 -static const char *EXTMEDIAJNI_LIB_NAME             = "libextmedia_jni.so";
 -static const char *kCreateJNIExtMediaPlayerListener = "CreateJNIExtMediaPlayerListener";
 -static const char *kCheckExtMedia                   = "checkExtMedia";
@@ -174,17 +264,23 @@ index 5bc45ff..2fb1a3b 100644
 -CreateNativeQCMediaPlayerFn JNIMediaPlayerFactory::sNativeQCMediaPlayerFn =
 -        JNIMediaPlayerFactory::loadNativeQCMediaPlayer();
 -
+-bool load_fail = false;
 -
 -void JNIMediaPlayerFactory::loadLib()
 -{
+-    if (load_fail) {
+-        return;
+-    }
+-
 -    if (!mLibHandle) {
 -        mLibHandle = ::dlopen(EXTMEDIAJNI_LIB_NAME, RTLD_LAZY);
 -        if (!mLibHandle) {
--            ALOGV("%s", dlerror());
+-            ALOGI("%s", dlerror());
+-            load_fail = true;
 -            return;
 -        }
--    ALOGV("Opened %s", EXTMEDIAJNI_LIB_NAME);
--  }
+-    ALOGI("Opened %s", EXTMEDIAJNI_LIB_NAME);
+-    }
 -}
 -
 -CreateJNIExtMediaPlayerListenerFn JNIMediaPlayerFactory::loadJNIExtMediaPlayerListener()
@@ -259,7 +355,7 @@ index 5bc45ff..2fb1a3b 100644
 -    if (sExtMediaFn) {
 -        bIsQCMediaPlayerPresent = (*sExtMediaFn)(env, thiz);
 -    }
--    ALOGE("JNIMediaPlayerFactory: bIsQCMediaPlayerPresent %d", bIsQCMediaPlayerPresent);
+-    ALOGI("JNIMediaPlayerFactory: bIsQCMediaPlayerPresent %d", bIsQCMediaPlayerPresent);
 -    return bIsQCMediaPlayerPresent;
 -}
 -
@@ -280,7 +376,7 @@ index 5bc45ff..2fb1a3b 100644
  // ----------------------------------------------------------------------------
  
  static sp<MediaPlayer> getMediaPlayer(JNIEnv* env, jobject thiz)
-@@ -1016,26 +868,14 @@ static void
+@@ -1022,26 +869,14 @@ static void
  android_media_MediaPlayer_native_setup(JNIEnv *env, jobject thiz, jobject weak_this)
  {
      ALOGV("native_setup");
@@ -311,104 +407,3 @@ index 5bc45ff..2fb1a3b 100644
      mp->setListener(listener);
  
      // Stow our new C++ MediaPlayer in an opaque field in the Java object.
--- 
-2.7.4
-
-From 7e10247080e699dca25e24c0ddb3dda30e89d8cb Mon Sep 17 00:00:00 2001
-From: LineageOS-MTK <luzejij@binka.me>
-Date: Wed, 4 Oct 2017 10:06:53 +0300
-Subject: [PATCH 3/4 ] Fix NetdConnector
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
----
- .../java/com/android/server/NativeDaemonConnector.java  | 17 +++++++++++++----
- .../com/android/server/NetworkManagementService.java    |  2 +-
- 2 files changed, 14 insertions(+), 5 deletions(-)
-
-diff --git a/services/core/java/com/android/server/NativeDaemonConnector.java b/services/core/java/com/android/server/NativeDaemonConnector.java
-index f5f7732..cc1aedc 100644
---- a/services/core/java/com/android/server/NativeDaemonConnector.java
-+++ b/services/core/java/com/android/server/NativeDaemonConnector.java
-@@ -73,7 +73,7 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
-     private AtomicInteger mSequenceNumber;
- 
-     private static final long DEFAULT_TIMEOUT = 1 * 60 * 1000; /* 1 minute */
--    private static final long WARN_EXECUTE_DELAY_MS = 500; /* .5 sec */
-+    private static final long WARN_EXECUTE_DELAY_MS = 5500; /* 5.5 sec */
- 
-     /** Lock held whenever communicating with native daemon. */
-     private final Object mDaemonLock = new Object();
-@@ -131,12 +131,22 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
-     public void run() {
-         mCallbackHandler = new Handler(mLooper, this);
- 
-+        long startTime = 0;
-         while (true) {
-             try {
-                 listenToSocket();
-             } catch (Exception e) {
--                loge("Error in NativeDaemonConnector: " + e);
--                SystemClock.sleep(5000);
-+                long currentTime = SystemClock.uptimeMillis();
-+                long elapsedTime = currentTime - startTime;
-+
-+                if (elapsedTime >= 5000 && startTime > 0) {
-+                    startTime = 0;
-+                }
-+
-+                if (startTime == 0)
-+                    startTime = currentTime;
-+
-+                SystemClock.sleep(100);
-             }
-         }
-     }
-@@ -267,7 +277,6 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback, Watchdo
-                 }
-             }
-         } catch (IOException ex) {
--            loge("Communications error: " + ex);
-             throw ex;
-         } finally {
-             synchronized (mDaemonLock) {
-diff --git a/services/core/java/com/android/server/NetworkManagementService.java b/services/core/java/com/android/server/NetworkManagementService.java
-index 4099d93..13b0c7c 100644
---- a/services/core/java/com/android/server/NetworkManagementService.java
-+++ b/services/core/java/com/android/server/NetworkManagementService.java
-@@ -925,7 +925,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
-                         timestampNanos = SystemClock.elapsedRealtimeNanos();
-                     }
-                     boolean isActive = cooked[2].equals("active");
--                    notifyInterfaceClassActivity(Integer.parseInt(cooked[3]),
-+                    notifyInterfaceClassActivity(cooked[3] == null ? 0 : Integer.parseInt(cooked[3]),
-                             isActive ? DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH
-                             : DataConnectionRealTimeInfo.DC_POWER_STATE_LOW,
-                             timestampNanos, processUid, false);
--- 
-2.7.4
-
-From d9a0e0741e61b041a331fdd076d42951e0f15f26 Mon Sep 17 00:00:00 2001
-From: adi766 <adityakumarteli7846@gmail.com>
-Date: Sat, 23 Sep 2017 16:53:20 +0000
-Subject: [PATCH 4/4 ] Remove BatteryStatsService (2) error in log
-
----
- services/core/java/com/android/server/am/BatteryStatsService.java   | 1 -
- 1 files changed, 0 insertions(+), 1 deletion(-)
- 
-diff --git a/services/core/java/com/android/server/am/BatteryStatsService.java b/services/core/java/com/android/server/am/BatteryStatsService.java
-index ff13125..e6241c5 100644
---- a/services/core/java/com/android/server/am/BatteryStatsService.java
-+++ b/services/core/java/com/android/server/am/BatteryStatsService.java
-@@ -1422,7 +1422,6 @@ public final class BatteryStatsService extends IBatteryStats.Stub
-                 return data;
-             }
-         }
--        Slog.e(TAG, "no controller energy info supplied");
-         return null;
-     }
- 
--- 
-2.7.4

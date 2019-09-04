@@ -6,7 +6,7 @@ Subject: changes for MTK
 Change-Id: I85ad7a3acccdd64f0e80edba7b7824801407219a
 
 diff --git a/core/jni/fd_utils-inl.h b/core/jni/fd_utils-inl.h
-index a68a60274ac..c6fc5088577 100644
+index d2eea08..8e1100a 100644
 --- a/core/jni/fd_utils-inl.h
 +++ b/core/jni/fd_utils-inl.h
 @@ -58,6 +58,7 @@ static const char* kPathWhitelist[] = {
@@ -14,6 +14,6 @@ index a68a60274ac..c6fc5088577 100644
    "/dev/ion",
    "/dev/dri/renderD129", // Fixes b/31172436
 +  "/proc/ged", // MTK add
-   "/system/framework/org.cyanogenmod.platform-res.apk",
  #ifdef PATH_WHITELIST_EXTRA_H
  PATH_WHITELIST_EXTRA_H
+ #endif
