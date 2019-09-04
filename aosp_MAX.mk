@@ -14,13 +14,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+LOCAL_PATH := device/CUBOT/MAX
 
 # Sample: This is where we'd set a backup provider if we had one
 # $(call inherit-product, device/sample/products/backup_overlay.mk)
 
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 $(call inherit-product, device/CUBOT/MAX/device_MAX.mk)
 $(call inherit-product-if-exists, vendor/CUBOT/MAX/MAX-vendor.mk)
+
+
+# Inherit some common Lineage OS stuff.
+$(call inherit-product, vendor/aosp/common.mk)
+
+# Device branding
+PRODUCT_RELEASE_NAME := MAX
+PRODUCT_DEVICE := MAX
+PRODUCT_NAME := aosp_MAX
+PRODUCT_BRAND := CUBOT
+PRODUCT_MANUFACTURER := CUBOT
+PRODUCT_MODEL := CUBOT MAX
+
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    BUILD_FINGERPRINT=CUBOT/x6069_cubot_5365u/x6069_cubot_5365u:6.0/MRA58K/1473658184:user/release-keys \
+PRIVATE_BUILD_DESC="x6069_cubot_5365u-user 6.0 MRA58K 1495446625 release-keys"
+
+# SuperUser
+WITH_SU := false
+WITH_ROOT := false
+
+PRODUCT_GMS_CLIENTID_BASE := android-google
