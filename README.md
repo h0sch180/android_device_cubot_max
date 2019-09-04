@@ -1,4 +1,4 @@
-# AOSPExtended 7.1.2 device tree for CUBOT MAX
+# AOSPExtended Nougat device tree for CUBOT MAX
 
 CUBOT MAX
 ==============
