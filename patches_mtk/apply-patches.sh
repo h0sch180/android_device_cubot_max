@@ -35,7 +35,7 @@ patch -p1 < ../../device/$brand/$model/patches_mtk/frameworks_native.patch
 cd ..
 cd base
 patch -p1 < ../../device/$brand/$model/patches_mtk/framework_base/0001-frameworks_base.patch
-patch -p1 < ../../device/$brand/$model/patches_mtk/framework_base/0002-Fix-Minior-Bugs.patch
+patch -p1 -N < ../../device/$brand/$model/patches_mtk/framework_base/0002-Fix-Minior-Bugs.patch
 patch -p1 < ../../device/$brand/$model/patches_mtk/framework_base/0003-frameworks_base_signature_spoofing.patch
 git clean -f -d
 cd ..
